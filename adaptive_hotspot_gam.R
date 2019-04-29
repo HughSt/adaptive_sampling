@@ -159,6 +159,8 @@ mean(sens_rand)
 mean(sens_pe)
 mean(mean_entropy_rand)
 mean(mean_entropy_pe)
+mean(ppv_rand)
+mean(ppv_pe)
 
 
 
