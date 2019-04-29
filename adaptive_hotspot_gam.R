@@ -145,7 +145,7 @@ for(i in 1:10){
       sens_rand <- c(sens_rand, sum(predictions_random == 1 & prev_data$theta > threshold) / sum(prev_data$theta > threshold))
       prop_corr_pe <- c(prop_corr_pe, mean(predictions_pen_entropy == as.numeric(prev_data$theta > threshold)))
       sens_pe <- c(sens_pe, sum(predictions_pen_entropy == 1 & prev_data$theta > threshold) / sum(prev_data$theta > threshold))
-      ppv_rand <- c(ppv_rand, sum(predictions_rand == 1 & prev_data$theta > threshold) / sum(predictions_rand))
+      ppv_rand <- c(ppv_rand, sum(predictions_random == 1 & prev_data$theta > threshold) / sum(predictions_random))
       ppv_pe <- c(ppv_pe, sum(predictions_pen_entropy == 1 & prev_data$theta > threshold) / sum(predictions_pen_entropy))
       mean_entropy_pe <- c(mean_entropy_pe, mean(entropy))
       mean_entropy_rand <- c(mean_entropy_rand, mean(0.5 - abs(0.5 - exceeds_rand)))
