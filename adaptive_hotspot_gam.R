@@ -18,9 +18,9 @@ leaflet() %>% addProviderTiles("CartoDB.Positron") %>%
 
 n_ind <- 100
 initial_sample_size <- 100
-batch_size <- 10
+batch_size <- 50
 n_step <- 2
-threshold <- 0.1
+threshold <- 0.02
 #exceedance_threshold <- 0.2
 prop_corr_rand <- NULL
 prop_corr_pe <- NULL
@@ -28,6 +28,8 @@ sens_rand <- NULL
 sens_pe <- NULL
 mean_entropy_pe <- NULL
 mean_entropy_rand <- NULL
+ppv_rand <- NULL
+ppv_pe <- NULL
 
 for(i in 1:10){
   
@@ -36,8 +38,8 @@ for(i in 1:10){
       prev_data$nneg <- n_ind - prev_data$npos
 
       # Now override the original initial sample and take a new one
-      prev_data$sample_0 <- 0
-      prev_data$sample_0[sample(1:nrow(prev_data), initial_sample_size)] <- 1
+      # prev_data$sample_0 <- 0
+      # prev_data$sample_0[sample(1:nrow(prev_data), initial_sample_size)] <- 1
       init_sample <- prev_data[prev_data$sample_0==1,]
       
       # Fit model
@@ -143,6 +145,8 @@ for(i in 1:10){
       sens_rand <- c(sens_rand, sum(predictions_random == 1 & prev_data$theta > threshold) / sum(prev_data$theta > threshold))
       prop_corr_pe <- c(prop_corr_pe, mean(predictions_pen_entropy == as.numeric(prev_data$theta > threshold)))
       sens_pe <- c(sens_pe, sum(predictions_pen_entropy == 1 & prev_data$theta > threshold) / sum(prev_data$theta > threshold))
+      ppv_rand <- c(ppv_rand, sum(predictions_rand == 1 & prev_data$theta > threshold) / sum(predictions_rand))
+      ppv_pe <- c(ppv_pe, sum(predictions_pen_entropy == 1 & prev_data$theta > threshold) / sum(predictions_pen_entropy))
       mean_entropy_pe <- c(mean_entropy_pe, mean(entropy))
       mean_entropy_rand <- c(mean_entropy_rand, mean(0.5 - abs(0.5 - exceeds_rand)))
       
