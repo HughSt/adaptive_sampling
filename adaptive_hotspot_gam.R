@@ -4,21 +4,23 @@ library(oro.nifti)
 library(RANN)
 
 rm(list=ls())
-source("/Users/sturrockh/Documents/Work/MEI/DiSARM/SurveyOptimization/R files/adaptive_survey_functions.R")
+source("https://raw.githubusercontent.com/HughSt/adaptive_sampling/master/adaptive_survey_functions.R")
 # load up data
-prev_data <- read.csv("/Users/sturrockh/Downloads/phl_data.csv")
+prev_data <- read.csv("/Users/sturrockh/Downloads/hti_data.csv")
 
 # Plot
 col_pal <- colorNumeric(tim.colors(), c(0, max(prev_data$theta)))
-leaflet() %>% addTiles() %>% addCircleMarkers(prev_data$lng, prev_data$lat, radius = 1, col = col_pal(prev_data$theta))
+leaflet() %>% addProviderTiles("CartoDB.Positron") %>% 
+  addCircleMarkers(prev_data$lng, prev_data$lat, radius = 3, col = col_pal(prev_data$theta)) %>%
+  leaflet::addLegend(pal=col_pal, values=prev_data$theta, title="Prevalence")
 
 # Loop the experiment n times
 
 n_ind <- 100
 initial_sample_size <- 100
-batch_size <- 50
+batch_size <- 10
 n_step <- 2
-threshold <- 0.02
+threshold <- 0.1
 #exceedance_threshold <- 0.2
 prop_corr_rand <- NULL
 prop_corr_pe <- NULL
